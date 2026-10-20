@@ -1326,7 +1326,7 @@ else:
 
     try:
         response = gemini_client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-3.8-flash",
             contents="Ответь одним предложением на русском языке: что такое фотосинтез?"
         )
         print("\nОтвет Gemini:")
