@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Личный кабинет — AI Study</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7ff;
+            color: #1f2340;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #5b5ce2;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+.navigation {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navigation a {
+    color: #555;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.navigation a:hover {
+    color: #5b5ce2;
+}
+        .user-name {
+            font-weight: bold;
+        }
+
+        .logout {
+            color: #5b5ce2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        main {
+            padding: 50px 8%;
+        }
+
+        .welcome {
+            margin-bottom: 35px;
+        }
+
+        .welcome h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .welcome p {
+            color: #777;
+            font-size: 17px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(50, 50, 100, 0.08);
+        }
+
+        .icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #5b5ce2;
+            margin-bottom: 5px;
+        }
+
+        .card p {
+            color: #777;
+        }
+
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(50, 50, 100, 0.08);
+        }
+
+        .content h2 {
+            margin-bottom: 15px;
+        }
+
+        .content > p {
+            color: #777;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 14px 22px;
+            background: #5b5ce2;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .button.secondary {
+            background: #f0f1ff;
+            color: #5b5ce2;
+        }
+
+        .tasks {
+            margin-top: 35px;
+        }
+
+        .tasks h2 {
+            margin-bottom: 20px;
+        }
+
+        .task {
+            background: white;
+            padding: 22px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 20px rgba(50, 50, 100, 0.06);
+        }
+
+        .task-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .task h3 {
+            margin-bottom: 8px;
+        }
+
+        .subject {
+            color: #5b5ce2;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .description {
+            color: #666;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        .deadline {
+            color: #777;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        .task-actions {
+            margin-top: 18px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .complete {
+            padding: 9px 15px;
+            background: #eef8f1;
+            color: #278348;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .delete {
+            padding: 9px 15px;
+            background: #fff0f0;
+            color: #d64545;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }.edit {
+    padding: 9px 15px;
+    background: #f0f0ff;
+    color: #5b5ce2;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+.edit:hover {
+    background: #e2e2ff;
+}
+
+        .completed {
+            opacity: 0.6;
+        }
+
+        .completed h3 {
+            text-decoration: line-through;
+        }
+
+        .empty {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            color: #777;
+            text-align: center;
+        }
+
+        @media (max-width: 900px) {
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            main {
+                padding: 30px 5%;
+            }
+
+            .user-name {
+                display: none;
+            }
+
+            .task-top {
+                flex-direction: column;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        🎓 AI Study
+    </div>
+
+    <nav class="navigation">
+
+        <a href="/dashboard">
+            🏠 Главная
+        </a>
+
+        <a href="/study_plan">
+            📚 Учебный план
+        </a>
+<a href="/ai_plan">🤖 AI-план</a>
+        <a href="/deadlines">
+            📅 Дедлайны
+        </a>
+        <a href="{{ url_for('calendar_page') }}">
+    🗓 Календарь
+</a>
+
+        <a href="/statistics">
+            📊 Статистика
+        </a>
+
+    </nav>
+
+    <div class="user">
+
+        <span class="user-name">
+            {{ name }}
+        </span>
+
+        <a href="/logout" class="logout">
+            Выйти
+        </a>
+
+    </div>
+
+</header>
+
+
+<main>
+
+
+    <div class="welcome">
+
+        <h1>
+            Добро пожаловать, {{ name }}! 👋
+        </h1>
+
+        <p>
+            Твой персональный учебный кабинет AI Study
+        </p>
+
+    </div>
+
+
+    <!-- СТАТИСТИКА -->
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <div class="icon">
+                📝
+            </div>
+
+            <h3>
+                Учебные задачи
+            </h3>
+
+            <div class="number">
+                {{ total_tasks }}
+            </div>
+
+            <p>
+                всего задач
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">
+                📅
+            </div>
+
+            <h3>
+                Дедлайны
+            </h3>
+
+            <div class="number">
+                {{ deadline_tasks }}
+            </div>
+
+            <p>
+                активных задач
+            </p>
+<a href="/deadlines" class="button secondary">
+    📅 Открыть дедлайны
+</a>
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">
+                ✅
+            </div>
+
+            <h3>
+                Выполнено
+            </h3>
+
+            <div class="number">
+                {{ completed_tasks }}
+            </div>
+
+            <p>
+                завершённых задач
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">
+                📊
+            </div>
+
+            <h3>
+                Прогресс
+            </h3>
+
+            <a href="/statistics" style="text-decoration: none;">
+    <div class="number">
+        {{ progress }}%
+    </div>
+</a>
+
+            <p>
+                выполнения
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- БЛОК ДОБАВЛЕНИЯ -->
+
+    <div class="content">
+
+        <h2>
+            🚀 Управление учебой
+        </h2>
+
+        <p>
+            Добавляй учебные задачи, устанавливай дедлайны
+            и отслеживай свой прогресс.
+        </p>
+
+        <div class="buttons">
+
+            <a href="/add_task" class="button">
+                + Добавить задачу
+            </a>
+
+            <a href="/study_plan" class="button secondary">
+                📚 Учебный план
+            </a>
+
+            <a href="/quiz" class="button">
+                📝 Пройти тест
+            </a>
+
+            <a href="/daily_learning" class="button secondary">
+                🎯 План на сегодня
+            </a>
+
+            <a href="{{ url_for('exam_prep') }}" class="button">
+                🎓 Подготовка к экзамену
+            </a>
+            
+
+<a href="{{ url_for('calendar_page') }}" class="button">
+     Календарь экзаменов
+</a>
+<a href="{{ url_for('ai_assistant') }}" class="button">
+    🤖 ИИ-помощник
+</a>
+
+        </div>
+
+    <!-- СПИСОК ЗАДАЧ -->
+
+    <div class="tasks">
+
+        <h2>
+            📝 Мои задачи
+        </h2>
+
+
+        {% if tasks %}
+
+
+            {% for task in tasks %}
+
+            <div class="task {% if task['completed'] == 1 %}completed{% endif %}">
+
+                <div class="task-top">
+
+                    <div>
+
+                        <div class="subject">
+                            {{ task['subject'] }}
+                        </div>
+
+                        <h3>
+                            {{ task['title'] }}
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                {% if task['description'] %}
+
+                <div class="description">
+                    {{ task['description'] }}
+                </div>
+
+                {% endif %}
+
+
+                {% if task['deadline'] %}
+
+                <div class="deadline">
+                    📅 Дедлайн: {{ task['deadline'] }}
+                </div>
+
+                {% endif %}
+
+
+                <div class="task-actions">
+
+                    {% if task['completed'] == 0 %}
+
+                    <a
+                        href="/complete_task/{{ task['id'] }}"
+                        class="complete"
+                    >
+                        ✓ Выполнить
+                    </a>
+
+                    {% else %}
+
+                    <span class="complete">
+                        ✓ Выполнено
+                    </span>
+
+                    {% endif %}
+<a
+    href="/edit_task/{{ task['id'] }}"
+    class="edit"
+>
+    ✏️ Редактировать
+</a>
+
+                    <a
+                        href="/delete_task/{{ task['id'] }}"
+                        class="delete"
+                    >
+                        🗑 Удалить
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+            <div class="empty">
+
+                <p>
+                    Пока нет учебных задач.
+                </p>
+
+                <p>
+                    Нажмите «+ Добавить задачу», чтобы создать первую.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ежедневное обучение | AI Study</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f5fb;
+            padding: 30px 15px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            margin-bottom: 16px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px #0000000d;
+        }
+
+        h1 {
+            color: #4f46e5;
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            flex: 1;
+            min-width: 150px;
+            background: #eef0ff;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .number {
+            font-size: 30px;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+
+        a {
+            color: #4f46e5;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📚 План обучения на сегодня</h1>
+
+    <p>Привет, {{ name }}! Вот твой учебный план.</p>
+
+    <div class="stats">
+
+        <div class="stat">
+            <p>Незавершённые задачи</p>
+            <div class="number">{{ pending_count }}</div>
+        </div>
+
+        <div class="stat">
+            <p>Выполненные задачи</p>
+            <div class="number">{{ completed_count }}</div>
+        </div>
+
+    </div>
+
+    <h2>Твои занятия</h2>
+
+    {% if study_steps %}
+
+        {% for step in study_steps %}
+
+            <div class="card">
+
+                <h3>📖 {{ step.subject }}</h3>
+
+                <p>{{ step.title }}</p>
+
+                <p>⏱️ Рекомендуемое время: {{ step.duration }} минут</p>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="card">
+            <h3>🎉 Все задачи выполнены!</h3>
+
+            <p>
+                Добавь новую учебную задачу,
+                чтобы составить следующий план занятий.
+            </p>
+        </div>
+
+    {% endif %}
+
+    <p>
+        <a href="/add_task">+ Добавить задачу</a>
+    </p>
+
+    <p>
+        <a href="/statistics">📊 Посмотреть статистику</a>
+    </p>
+
+    <p>
+        <a href="/dashboard">← Вернуться в личный кабинет</a>
+    </p>
+
+</div>
+
+</body>
+</html>

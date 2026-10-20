@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Учебный тест | AI Study</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f5fb;
+            margin: 0;
+            padding: 30px 15px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 24px;
+            margin-bottom: 18px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px #0000000d;
+        }
+
+        h1 {
+            color: #4f46e5;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin: 8px 0 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .option {
+            display: block;
+            padding: 12px;
+            margin: 8px 0;
+            background: #f5f6fc;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #4f46e5;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .result {
+            background: #e8f8ed;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .error {
+            background: #fee2e2;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+        }
+
+        a {
+            color: #4f46e5;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <h1>📝 Учебный тест</h1>
+
+    <p>Выбери предмет и тему — ИИ создаст для тебя тест!</p>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if not questions or result %}
+
+        <div class="card">
+            <h2>Создать свой тест</h2>
+
+            <form method="POST">
+                <input type="hidden" name="action" value="generate">
+
+                <label for="subject">📚 Предмет</label>
+                <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    placeholder="Например, математика"
+                    value="{{ subject }}"
+                    required
+                >
+
+                <label for="topic">📖 Тема</label>
+                <input
+                    type="text"
+                    id="topic"
+                    name="topic"
+                    placeholder="Например, квадратные уравнения"
+                    value="{{ topic }}"
+                    required
+                >
+
+                <label for="count">🔢 Количество вопросов (1–20)</label>
+                <input
+                    type="number"
+                    id="count"
+                    name="count"
+                    min="1"
+                    max="20"
+                    value="{{ count }}"
+                    required
+                >
+
+                <button type="submit">✨ Сгенерировать тест</button>
+            </form>
+        </div>
+
+    {% endif %}
+
+    {% if result %}
+        <div class="result">
+            <h2>Тест завершён!</h2>
+
+            <p>
+                Правильных ответов:
+                <strong>{{ result.score }} из {{ result.total }}</strong>
+            </p>
+
+            <h2>Результат: {{ result.percent }}%</h2>
+
+            {% if result.percent >= 80 %}
+                <p>Отлично! Ты хорошо знаешь материал.</p>
+            {% elif result.percent >= 50 %}
+                <p>Неплохо! Повтори темы, в которых ошибся.</p>
+            {% else %}
+                <p>Стоит повторить материал и пройти тест ещё раз.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if questions %}
+        <div class="card">
+            <h2>{{ subject }}: {{ topic }}</h2>
+            <p>Количество вопросов: {{ questions|length }}</p>
+        </div>
+
+        <form method="POST">
+            <input type="hidden" name="action" value="check">
+
+            <input
+                type="hidden"
+                name="subject"
+                value="{{ subject }}"
+            >
+
+            <input
+                type="hidden"
+                name="topic"
+                value="{{ topic }}"
+            >
+
+            <input
+                type="hidden"
+                name="count"
+                value="{{ questions|length }}"
+            >
+
+            <input
+                type="hidden"
+                name="questions_data"
+                value="{{ questions|tojson|forceescape }}"
+            >
+
+            {% for q in questions %}
+                {% set qi = loop.index0 %}
+
+                <div class="card">
+                    <h3>{{ loop.index }}. {{ q.question }}</h3>
+
+                    {% for option in q.options %}
+                        <label class="option">
+                            <input
+                                type="radio"
+                                name="q{{ qi }}"
+                                value="{{ loop.index0 }}"
+                                {% if answers and answers[qi] == loop.index0 %}
+                                    checked
+                                {% endif %}
+                            >
+
+                            {{ option }}
+                        </label>
+                    {% endfor %}
+
+                    {% if result %}
+                        <p>
+                            {% if answers[qi] == q.correct %}
+                                ✅ Правильно!
+                            {% else %}
+                                ❌ Правильный ответ:
+                                {{ q.options[q.correct] }}
+                            {% endif %}
+                        </p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            {% if not result %}
+                <button type="submit">Проверить ответы</button>
+            {% endif %}
+        </form>
+    {% endif %}
+
+    <p>
+        <a href="{{ url_for('dashboard') }}">← Вернуться в личный кабинет</a>
+    </p>
+
+</div>
+</body>
+</html>

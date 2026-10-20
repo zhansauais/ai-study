@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Добавить задачу — AI Study</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7ff;
+            color: #1f2340;
+            min-height: 100vh;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #5b5ce2;
+        }
+
+        .back {
+            color: #5b5ce2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        main {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 22px;
+            box-shadow: 0 15px 40px rgba(50, 50, 100, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+            margin-bottom: 22px;
+            font-family: Arial, sans-serif;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #5b5ce2;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .add-button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #5b5ce2;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .add-button:hover {
+            background: #4647c7;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        🎓 AI Study
+    </div>
+
+    <a href="/dashboard" class="back">
+        ← Назад в кабинет
+    </a>
+
+</header>
+
+
+<main>
+
+    <div class="form-container">
+
+        <h1>
+            📝 Новая учебная задача
+        </h1>
+
+        <p class="subtitle">
+            Добавьте задачу, чтобы не забыть о важном
+        </p>
+
+
+        <form method="POST">
+
+            <label for="title">
+                Название задачи
+            </label>
+
+            <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Например: Подготовить лабораторную работу"
+                required
+            >
+
+
+            <label for="subject">
+                Предмет
+            </label>
+
+            <input
+                type="text"
+                id="subject"
+                name="subject"
+                placeholder="Например: Основы информационной безопасности"
+                required
+            >
+
+
+            <label for="description">
+                Описание
+            </label>
+
+            <textarea
+                id="description"
+                name="description"
+                placeholder="Дополнительная информация о задаче..."
+            ></textarea>
+
+
+            <label for="deadline">
+                Дедлайн
+            </label>
+
+            <input
+                type="date"
+                id="deadline"
+                name="deadline"
+                required
+            >
+
+
+            <button
+                type="submit"
+                class="add-button"
+            >
+                Добавить задачу
+            </button>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>

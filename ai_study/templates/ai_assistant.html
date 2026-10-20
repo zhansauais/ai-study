@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ИИ-помощник | AI Study</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f3ff;
+            margin: 0;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            color: #6c4ce4;
+            text-align: center;
+        }
+
+        .description {
+            text-align: center;
+            color: #666;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 12px;
+            padding: 12px 22px;
+            background: #7653e8;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #5e3bc9;
+        }
+
+        .answer {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f4f0ff;
+            border-radius: 12px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            color: #6c4ce4;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🤖 ИИ-помощник</h1>
+
+        <p class="description">
+            Задавай вопросы, изучай сложные темы
+            и готовься к экзаменам!
+        </p>
+
+        <form method="POST">
+            <textarea
+                name="question"
+                placeholder="Например: объясни основы Python простыми словами..."
+                required
+            >{{ question }}</textarea>
+
+            <button type="submit">✨ Спросить ИИ</button>
+        </form>
+
+        {% if answer %}
+            <div class="answer">
+                <h3>Ответ ИИ:</h3>
+                {{ answer }}
+            </div>
+        {% endif %}
+
+        <a class="back" href="{{ url_for('dashboard') }}">
+            ← Вернуться в личный кабинет
+        </a>
+    </div>
+</body>
+</html>

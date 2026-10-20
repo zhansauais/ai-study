@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Календарь — AI Study</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7ff;
+            color: #252746;
+        }
+
+        header {
+            background: white;
+            padding: 22px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px #0000000a;
+        }
+
+        .logo {
+            color: #5b5ce2;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        header a {
+            color: #5b5ce2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            padding: 30px;
+            border-radius: 20px;
+            color: white;
+            background: linear-gradient(135deg, #5b5ce2, #9284f5);
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            margin-top: 0;
+        }
+
+        .hero p {
+            line-height: 1.6;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 25px;
+        }
+
+        .panel {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px #2527460a;
+            margin-bottom: 25px;
+        }
+
+        .month-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .month-header h2 {
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .month-header a {
+            padding: 9px 12px;
+            border-radius: 8px;
+            background: #f0f1ff;
+            color: #5b5ce2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .weekdays, .days {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 6px;
+        }
+
+        .weekday {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            padding: 8px 0;
+        }
+
+        .day {
+            min-height: 65px;
+            padding: 7px 3px;
+            border-radius: 9px;
+            background: #f7f8fd;
+            text-align: center;
+            text-decoration: none;
+            color: #252746;
+            font-size: 14px;
+            border: 1px solid transparent;
+        }
+
+        .day:hover {
+            border-color: #5b5ce2;
+        }
+
+        .day.today {
+            border: 2px solid #5b5ce2;
+            font-weight: bold;
+        }
+
+        .day.selected {
+            background: #eae8ff;
+            border-color: #5b5ce2;
+        }
+
+        .day.empty {
+            background: transparent;
+            pointer-events: none;
+        }
+
+        .event-dots {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-top: 8px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #5b5ce2;
+        }
+
+        .dot.exam {
+            background: #e84d79;
+        }
+
+        .dot.lab {
+            background: #e7a23b;
+        }
+
+        .dot.other {
+            background: #20a779;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 7px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dfe2ee;
+            border-radius: 9px;
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 75px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 18px;
+            border: none;
+            border-radius: 10px;
+            background: #5b5ce2;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #4849c7;
+        }
+
+        .event {
+            padding: 15px;
+            background: #f7f8fd;
+            border-left: 4px solid #5b5ce2;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .event.exam {
+            border-color: #e84d79;
+        }
+
+        .event.lab {
+            border-color: #e7a23b;
+        }
+
+        .event.other {
+            border-color: #20a779;
+        }
+
+        .event h3 {
+            margin: 0 0 8px;
+            font-size: 16px;
+        }
+
+        .event p {
+            color: #777;
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 5px 0;
+        }
+
+        .delete {
+            display: inline-block;
+            margin-top: 10px;
+            color: #d64545;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: #777;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+        .legend span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .empty-message {
+            color: #888;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .flash {
+            padding: 12px;
+            background: #eaf8ef;
+            color: #247744;
+            border-radius: 9px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 800px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            .panel {
+                padding: 15px;
+            }
+
+            .day {
+                min-height: 48px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🎓 AI Study</div>
+    <a href="{{ url_for('dashboard') }}">← На главную</a>
+</header>
+
+<div class="container">
+
+    <section class="hero">
+        <h1>📅 Календарь учёбы</h1>
+        <p>
+            Планируй экзамены, рубежные контроли,
+            лабораторные и важные учебные дедлайны в одном месте.
+        </p>
+    </section>
+
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <div class="layout">
+
+        <section class="panel">
+            <div class="month-header">
+                <a href="{{ url_for('calendar_page', year=prev_year, month=prev_month) }}">←</a>
+                <h2>{{ month_name }} {{ year }}</h2>
+                <a href="{{ url_for('calendar_page', year=next_year, month=next_month) }}">→</a>
+            </div>
+
+            <div class="weekdays">
+                <div class="weekday">Пн</div>
+                <div class="weekday">Вт</div>
+                <div class="weekday">Ср</div>
+                <div class="weekday">Чт</div>
+                <div class="weekday">Пт</div>
+                <div class="weekday">Сб</div>
+                <div class="weekday">Вс</div>
+            </div>
+
+            <div class="days">
+                {% for week in calendar_weeks %}
+                    {% for day in week %}
+                        {% if day == 0 %}
+                            <div class="day empty"></div>
+                        {% else %}
+                            {% set date_key = "%04d-%02d-%02d"|format(year, month, day) %}
+
+                            <a
+                                class="day {% if date_key == today %}today{% endif %} {% if date_key == selected_date %}selected{% endif %}"
+                                href="{{ url_for('calendar_page', year=year, month=month, day=day) }}"
+                            >
+                                {{ day }}
+
+                                {% if date_key in event_dates %}
+                                    <div class="event-dots">
+                                        {% for kind in event_dates[date_key] %}
+                                            <span class="dot {{ kind }}"></span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+            <div class="legend">
+                <span><i class="dot exam"></i> Экзамен / контроль</span>
+                <span><i class="dot lab"></i> Лабораторная</span>
+                <span><i class="dot other"></i> Другое</span>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>➕ Добавить событие</h2>
+
+            <form method="POST" action="{{ url_for('calendar_page') }}">
+
+                <label for="title">Название</label>
+                <input
+                    id="title"
+                    name="title"
+                    placeholder="Например, Рубежный контроль по Python"
+                    required
+                    maxlength="150"
+                >
+
+                <label for="subject">Предмет</label>
+                <input
+                    id="subject"
+                    name="subject"
+                    placeholder="Например, Python"
+                    maxlength="100"
+                >
+
+                <label for="event_date">Дата</label>
+                <input
+                    id="event_date"
+                    name="event_date"
+                    type="date"
+                    value="{{ selected_date }}"
+                    required
+                >
+
+                <label for="kind">Тип события</label>
+                <select id="kind" name="kind">
+                    <option value="exam">Экзамен / контроль</option>
+                    <option value="lab">Лабораторная</option>
+                    <option value="other">Другое</option>
+                </select>
+
+                <label for="description">Описание</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Что нужно подготовить?"
+                    maxlength="1000"
+                ></textarea>
+
+                <button type="submit">Сохранить событие</button>
+            </form>
+        </section>
+
+    </div>
+
+    <section class="panel">
+        <h2>
+            📌 События:
+            {{ selected_date }}
+        </h2>
+
+        {% if selected_events %}
+            {% for event in selected_events %}
+                <div class="event {{ event['kind'] }}">
+                    <h3>{{ event['title'] }}</h3>
+
+                    {% if event['subject'] %}
+                        <p>📚 {{ event['subject'] }}</p>
+                    {% endif %}
+
+                    <p>
+                        📅 {{ event['event_date'] }}
+                        · Осталось дней: {{ event['days_left'] }}
+                    </p>
+
+                    {% if event['description'] %}
+                        <p>{{ event['description'] }}</p>
+                    {% endif %}
+
+                    <a
+                        class="delete"
+                        href="{{ url_for('delete_calendar_event', event_id=event['id']) }}"
+                        onclick="return confirm('Удалить это событие?')"
+                    >
+                        🗑 Удалить событие
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty-message">
+                На эту дату событий пока нет.
+                Выбери другой день или добавь событие.
+            </p>
+        {% endif %}
+    </section>
+
+</div>
+
+</body>
+</html>

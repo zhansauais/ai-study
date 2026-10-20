@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Регистрация — AI Study</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7ff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .register-container {
+            width: 440px;
+            background: white;
+            padding: 40px;
+            border-radius: 22px;
+            box-shadow: 0 15px 45px rgba(50, 50, 100, 0.15);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+            color: #5b5ce2;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1f2340;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 18px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #5b5ce2;
+        }
+
+        .register-button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #5b5ce2;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .register-button:hover {
+            background: #4647c7;
+        }
+
+        .login {
+            text-align: center;
+            margin-top: 24px;
+            color: #666;
+        }
+
+        .login a {
+            color: #5b5ce2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="register-container">
+
+    <div class="logo">🎓 AI Study</div>
+
+    <h1>Создать аккаунт</h1>
+
+    <p class="subtitle">
+        Начните организовывать свою учебу
+    </p>
+
+    <form method="POST">
+
+        <label for="name">Имя</label>
+
+        <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Введите ваше имя"
+            required
+        >
+
+        <label for="email">Email</label>
+
+        <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Введите email"
+            required
+        >
+
+        <label for="password">Пароль</label>
+
+        <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Придумайте пароль"
+            required
+        >
+
+        <label for="password2">Повторите пароль</label>
+
+        <input
+            type="password"
+            id="password2"
+            name="password2"
+            placeholder="Повторите пароль"
+            required
+        >
+
+        <button class="register-button" type="submit">
+            Создать аккаунт
+        </button>
+
+    </form>
+
+    <div class="login">
+        Уже есть аккаунт?
+        <a href="/login">Войти</a>
+    </div>
+
+    <a class="back" href="/">
+        ← Вернуться на главную
+    </a>
+
+</div>
+
+</body>
+</html>
