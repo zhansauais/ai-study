@@ -65,7 +65,7 @@ def ask_gemini(prompt):
 
 
 
-app.secret_key = "ai-study-secret-key"
+app.secret_key = os.getenv("SECRET_KEY", "dev-key-change-me")
 
 
 # =========================
@@ -1317,6 +1317,8 @@ def ai_assistant():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
+else:
+    init_db()
     def test_gemini():
         if not GEMINI_API_KEY:
             print("API-ключ не найден. Проверь файл .env")
